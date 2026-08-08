@@ -495,43 +495,31 @@ async function loadProjectGallery(folder) {
    FECHAR PROJETO
 ======================================== */
 
-
 function closeProject() {
 
   lightbox.classList.remove("open");
 
-
   projectContent.innerHTML = "";
 
-
   document.body.style.overflow = "";
-
-
-  /*
-  Remove #projeto da URL.
-  */
 
   history.pushState(
     {},
     "",
     window.location.pathname
   );
-
 }
 
 
+if (closeButton) {
+  closeButton.addEventListener(
+    "click",
+    closeProject
+  );
+}
 
-closeButton.addEventListener(
-  "click",
-  closeProject
-);
 
-
-
-/*
-ESC também fecha.
-*/
-
+/* ESC também fecha */
 
 document.addEventListener(
   "keydown",
@@ -541,67 +529,44 @@ document.addEventListener(
       event.key === "Escape" &&
       lightbox.classList.contains("open")
     ) {
-
       closeProject();
-
     }
 
   }
 );
 
 
-
 /* ========================================
    LINK DIRETO PARA PROJETO
 ======================================== */
-
 
 async function openProjectFromURL() {
 
   const hash =
     window.location.hash.substring(1);
 
-
   if (!hash) return;
 
-
-  /*
-  Primeiro espera os projetos
-  serem carregados.
-  */
-
   await loadProjects();
-
 
   const projectButton =
     document.querySelector(
       `[data-folder="${CSS.escape(hash)}"]`
     );
 
-
   if (projectButton) {
-
     openProject(hash);
-
   }
 
 }
-
 
 
 /* ========================================
    INICIAR SITE
 ======================================== */
 
-
 if (window.location.hash) {
-
   openProjectFromURL();
-
-}
-
-else {
-
+} else {
   loadProjects();
-
 }
