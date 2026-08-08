@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,8 @@
 
   <main>
 
+    <!-- INTRODUÇÃO -->
+
     <section class="intro">
       <p>
         frombrazilwithlovestudio is an independent practice working across
@@ -24,6 +27,8 @@
     </section>
 
 
+    <!-- ÍNDICE DE PROJETOS -->
+
     <section class="projects-index">
 
       <div class="table-header">
@@ -32,38 +37,22 @@
         <span>Category</span>
       </div>
 
-      <button class="project-row" data-project="projects/maquinagem.html">
-        <span>2026</span>
-        <span>Maquinagem</span>
-        <span>Film / Book</span>
-      </button>
-
-      <button class="project-row" data-project="projects/i-look.html">
-        <span>2026</span>
-        <span>I Look and Sometimes I See</span>
-        <span>Photography / Book</span>
-      </button>
-
-      <button class="project-row" data-project="projects/the-iconomist-09.html">
-        <span>2026</span>
-        <span>THE-ICONOMIST 09</span>
-        <span>Publishing</span>
-      </button>
-
-      <button class="project-row" data-project="projects/contretemps.html">
-        <span>2020</span>
-        <span>Contretemps</span>
-        <span>Photography / Book</span>
-      </button>
+      <div id="projects-list">
+        <div class="loading">Loading projects...</div>
+      </div>
 
     </section>
 
   </main>
 
 
+  <!-- LIGHTBOX -->
+
   <div id="project-lightbox">
 
-    <button id="close-project" aria-label="Close">×</button>
+    <button id="close-project" aria-label="Close project">
+      ×
+    </button>
 
     <div id="project-content"></div>
 
@@ -73,4 +62,5 @@
   <script src="script.js"></script>
 
 </body>
+
 </html>
