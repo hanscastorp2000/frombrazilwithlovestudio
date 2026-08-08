@@ -112,20 +112,15 @@ main {
 
 
 
-/* ========================================
-   LIGHTBOX
-======================================== */
-
-
 #project-lightbox {
   position: fixed;
 
-  inset: 0;
+  top: 8vh;
+  left: 3vw;
+  right: 3vw;
+  bottom: 0;
 
   display: none;
-
-  width: 100%;
-  height: 100%;
 
   padding: 20px;
 
@@ -133,51 +128,16 @@ main {
 
   background: #fff;
 
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+
   z-index: 1000;
 }
-
 
 #project-lightbox.open {
   display: block;
 }
-
-
-#close-project {
-  position: fixed;
-
-  top: 20px;
-  right: 20px;
-
-  padding: 0;
-
-  border: 0;
-  background: transparent;
-
-  color: #000;
-
-  font: inherit;
-  font-size: 30px;
-  line-height: 1;
-
-  cursor: pointer;
-
-  z-index: 1100;
-}
-
-
-#project-content {
-  width: 100%;
-}
-
-
-#project-content img,
-#project-content video {
-  display: block;
-
-  max-width: 100%;
-  height: auto;
-}
-
 
 
 /* ========================================
