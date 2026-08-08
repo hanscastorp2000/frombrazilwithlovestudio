@@ -277,56 +277,53 @@ function renderProjects(projects) {
    ABRIR PROJETO
 ======================================== */
 
-
 async function openProject(folder) {
 
   try {
 
-    const response =
-      await fetch(
-        `projects/${folder}/content.html`
-      );
+    /*
+    CARREGA O HTML DO PROJETO
+    */
+
+    const response = await fetch(
+      `projects/${folder}/content.html`
+    );
 
 
     if (!response.ok) {
-
       throw new Error(
         "content.html não encontrado"
       );
-
     }
 
 
-    const html =
-      await response.text();
+    const html = await response.text();
 
 
-    projectContent.innerHTML =
-      html;
+    projectContent.innerHTML = html;
 
+
+    /*
+    ABRE O LIGHTBOX
+    */
 
     lightbox.classList.add("open");
 
-
-    /*
-    Impede a home de rolar
-    enquanto o projeto está aberto.
-    */
-
-    document.body.style.overflow =
-      "hidden";
-
-
-    /*
-    O lightbox sempre começa no topo.
-    */
+    document.body.style.overflow = "hidden";
 
     lightbox.scrollTop = 0;
 
 
     /*
-    Coloca o nome do projeto na URL,
-    sem recarregar a página.
+    CARREGA AUTOMATICAMENTE
+    AS IMAGENS
+    */
+
+    await loadProjectGallery(folder);
+
+
+    /*
+    URL DO PROJETO
     */
 
     history.pushState(
@@ -337,7 +334,6 @@ async function openProject(folder) {
 
   }
 
-
   catch (error) {
 
     console.error(error);
@@ -346,7 +342,154 @@ async function openProject(folder) {
 
 }
 
+async function loadProjectGallery(folder) {
 
+  const gallery =
+    projectContent.querySelector("[data-gallery]");
+
+
+  /*
+  Se este projeto não tiver
+  uma galeria, simplesmente ignora.
+  */
+
+  if (!gallery) return;
+
+
+  try {
+
+    const githubURL =
+      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/projects/${folder}/images`;
+
+
+    const response =
+      await fetch(githubURL);
+
+
+    if (!response.ok) {
+
+      console.warn(
+        `${folder}: pasta images não encontrada`
+      );
+
+      return;
+
+    }
+
+
+    const files =
+      await response.json();
+
+
+    /*
+    Extensões reconhecidas
+    */
+
+    const imageExtensions = [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".webp",
+      ".gif",
+      ".avif"
+    ];
+
+
+    /*
+    Seleciona apenas imagens
+    */
+
+    const images =
+      files.filter(file => {
+
+        if (file.type !== "file") {
+          return false;
+        }
+
+
+        const name =
+          file.name.toLowerCase();
+
+
+        return imageExtensions.some(
+          extension =>
+            name.endsWith(extension)
+        );
+
+      });
+
+
+
+    /*
+    ORGANIZA PELO NOME
+    */
+
+    images.sort((a, b) =>
+      a.name.localeCompare(
+        b.name,
+        undefined,
+        {
+          numeric: true,
+          sensitivity: "base"
+        }
+      )
+    );
+
+
+
+    /*
+    CRIA A GALERIA
+    */
+
+    images.forEach(image => {
+
+      const figure =
+        document.createElement("figure");
+
+
+      figure.className =
+        "image-full";
+
+
+      const img =
+        document.createElement("img");
+
+
+      /*
+      Usamos download_url retornado
+      pelo próprio GitHub.
+      */
+
+      img.src =
+        image.download_url;
+
+
+      img.alt = "";
+
+
+      img.loading =
+        "lazy";
+
+
+      figure.appendChild(img);
+
+      gallery.appendChild(figure);
+
+    });
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      `Erro ao carregar imagens de ${folder}`,
+      error
+    );
+
+  }
+
+}
 
 /* ========================================
    FECHAR PROJETO
