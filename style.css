@@ -193,12 +193,30 @@ main {
     padding: 12px;
   }
 
+#close-project {
+  position: sticky;
 
-  #close-project {
-    top: 12px;
-    right: 12px;
-  }
+  top: 0;
 
+  display: block;
+  margin-left: auto;
+
+  padding: 0;
+
+  border: 0;
+  background: #fff;
+
+  color: #000;
+
+  font: inherit;
+  font-size: 30px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  z-index: 1100;
+}
+  
 }
 
 /* ========================================
